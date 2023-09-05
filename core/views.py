@@ -3,6 +3,9 @@ from django.shortcuts import render, redirect
 from .forms import NewUserForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
+from rest_framework import generics
+from .models import Secret
+from .serializers import SecretSerializer
 
 
 def index(request):
@@ -45,3 +48,13 @@ def logout_view(request):
     logout(request)
     messages.info(request, "You have successfully logged out.")
     return redirect("index")
+
+
+class SecretListCreateView(generics.ListCreateAPIView):
+    queryset = Secret.objects.all()
+    serializer_class = SecretSerializer
+
+
+class SecretDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Secret.objects.all()
+    serializer_class = SecretSerializer
