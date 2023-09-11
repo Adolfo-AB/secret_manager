@@ -51,10 +51,14 @@ def logout_view(request):
 
 
 class SecretListCreateView(generics.ListCreateAPIView):
-    queryset = Secret.objects.all()
     serializer_class = SecretSerializer
+
+    def get_queryset(self):
+        return Secret.objects.filter(user=self.request.user)
 
 
 class SecretDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Secret.objects.all()
     serializer_class = SecretSerializer
+
+    def get_queryset(self):
+        return Secret.objects.filter(user=self.request.user)
