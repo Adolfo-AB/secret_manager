@@ -1,4 +1,6 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from .forms import NewUserForm
 from django.contrib.auth import login, authenticate, logout
@@ -13,6 +15,9 @@ def index(request):
 
 
 def register_request(request):
+    if request.user.is_authenticated:
+        return redirect("index")
+
     if request.method == "POST":
         form = NewUserForm(request.POST)
         if form.is_valid():
@@ -26,6 +31,9 @@ def register_request(request):
 
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect("index")
+
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -44,20 +52,21 @@ def login_view(request):
     return render(request=request, template_name="core/login.html", context={"login_form": form})
 
 
+@login_required
 def logout_view(request):
     logout(request)
     messages.info(request, "You have successfully logged out.")
     return redirect("index")
 
 
-class SecretListCreateView(generics.ListCreateAPIView):
+class SecretListCreateView(LoginRequiredMixin, generics.ListCreateAPIView):
     serializer_class = SecretSerializer
 
     def get_queryset(self):
         return Secret.objects.filter(user=self.request.user)
 
 
-class SecretDetailView(generics.RetrieveUpdateDestroyAPIView):
+class SecretDetailView(LoginRequiredMixin, generics.RetrieveUpdateDestroyAPIView):
     serializer_class = SecretSerializer
 
     def get_queryset(self):
