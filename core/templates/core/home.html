@@ -1,0 +1,16 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+    {% if user.is_authenticated %}
+        <div class="container-secrets"></div>
+    {% else %}
+        <div class="d-flex flex-column justify-content-center align-items-center" style="height: 50vh;">
+            <h1>Welcome to SecretManager!</h1>
+            <h2 style="margin-top: 20px;"><a href="/register">Create an account</a> or <a href="/login">login</a> if you already have one.</h2>
+        </div>
+    {% endif %}
+
+{% endblock %}

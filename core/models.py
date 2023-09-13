@@ -1,7 +1,7 @@
 from cryptography.fernet import Fernet
 from django.db import models
 
-from core.utils import get_master_key, encrypt, decrypt
+from core.services import get_master_key, encrypt, decrypt
 
 
 class Secret(models.Model):

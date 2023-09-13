@@ -10,13 +10,13 @@ from .models import Secret
 from .serializers import SecretSerializer
 
 
-def index(request):
-    return render(request, "core/index.html")
+def home(request):
+    return render(request, "core/home.html")
 
 
 def register_request(request):
     if request.user.is_authenticated:
-        return redirect("index")
+        return redirect("home")
 
     if request.method == "POST":
         form = NewUserForm(request.POST)
@@ -24,7 +24,7 @@ def register_request(request):
             user = form.save()
             login(request, user)
             messages.success(request, "Registration successful.")
-            return redirect("index")
+            return redirect("home")
         messages.error(request, "Unsuccessful registration. Invalid information.")
     form = NewUserForm()
     return render(request=request, template_name="core/register.html", context={"register_form": form})
@@ -32,7 +32,7 @@ def register_request(request):
 
 def login_view(request):
     if request.user.is_authenticated:
-        return redirect("index")
+        return redirect("home")
 
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
@@ -43,7 +43,7 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 messages.info(request, f"You are now logged in as {username}.")
-                return redirect("index")
+                return redirect("home")
             else:
                 messages.error(request, "Invalid username or password.")
         else:
@@ -56,7 +56,7 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     messages.info(request, "You have successfully logged out.")
-    return redirect("index")
+    return redirect("home")
 
 
 class SecretListCreateView(LoginRequiredMixin, generics.ListCreateAPIView):
