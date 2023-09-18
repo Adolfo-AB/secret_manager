@@ -43,6 +43,41 @@ document.addEventListener("DOMContentLoaded", function () {
                 cardAdditionalInfo.textContent = secret.additional_info;
                 cardBody.appendChild(cardAdditionalInfo);
 
+                // Create a delete button
+                const deleteButton = document.createElement("button");
+                deleteButton.classList.add("btn", "btn-danger", "float-end"); // Add Bootstrap styling classes
+                deleteButton.textContent = "Delete";
+
+                // Add click event listener to delete the secret
+                deleteButton.addEventListener("click", function () {
+                    const confirmed = confirm("Are you sure you want to delete this secret?");
+                    if (confirmed) {
+                        // Send a DELETE request to the API
+                        fetch(`/secrets/${secret.id}/`, {
+                            method: "DELETE",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "X-CSRFToken": csrftoken,
+                            }
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                // Secret deleted successfully, refresh the page
+                                window.location.reload();
+                            } else {
+                                // Handle error response
+                                console.error("Error deleting secret:", response.statusText);
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error deleting secret:", error);
+                        });
+                    }
+                });
+
+                cardBody.appendChild(deleteButton);
+
+
                 card.appendChild(cardBody);
                 container.appendChild(card);
             });
@@ -57,3 +92,9 @@ document.addEventListener("DOMContentLoaded", function () {
         fetchAndDisplaySecrets(); // Fetch and display secrets if the user is logged in
     }
 });
+
+// Function to get the CSRF token from cookies
+function getCookie(name) {
+    const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+    return cookieValue ? cookieValue.pop() : '';
+}

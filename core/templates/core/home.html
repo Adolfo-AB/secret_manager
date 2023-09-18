@@ -5,6 +5,10 @@
 {% load crispy_forms_tags %}
 
     {% if user.is_authenticated %}
+        {% csrf_token %}
+        <script>
+          var csrftoken = '{{ csrf_token }}';
+        </script>
         <div class="container-secrets mt-4">
             <!-- Secrets will be displayed here using Bootstrap cards -->
         </div>
