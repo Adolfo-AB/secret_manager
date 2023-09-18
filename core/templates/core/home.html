@@ -5,7 +5,9 @@
 {% load crispy_forms_tags %}
 
     {% if user.is_authenticated %}
-        <div class="container-secrets"></div>
+        <div class="container-secrets mt-4">
+            <!-- Secrets will be displayed here using Bootstrap cards -->
+        </div>
     {% else %}
         <div class="d-flex flex-column justify-content-center align-items-center" style="height: 50vh;">
             <h1>Welcome to SecretManager!</h1>
