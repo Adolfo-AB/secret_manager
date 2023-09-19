@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
+from core.models import Secret
+
 
 class NewUserForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -16,3 +18,11 @@ class NewUserForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+
+class SecretForm(forms.ModelForm):
+    class Meta:
+        model = Secret
+        fields = ['title', 'additional_info']
+
+    content = forms.CharField(widget=forms.Textarea, required=True)

@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
-from .forms import NewUserForm
+from .forms import NewUserForm, SecretForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from rest_framework import generics
@@ -71,3 +71,8 @@ class SecretDetailView(LoginRequiredMixin, generics.RetrieveUpdateDestroyAPIView
 
     def get_queryset(self):
         return Secret.objects.filter(user=self.request.user)
+
+
+def add_secret(request):
+    form = SecretForm()
+    return render(request, 'core/add.html', {'form': form})
