@@ -3,10 +3,14 @@
 {% block content %}
 {% load crispy_forms_tags %}
 
-  <h2>Add Secret</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
+<h2>Add Secret</h2>
+
+<form id="secret-form" method="post">
+  {% csrf_token %}
+  <script>
+    var csrftoken = '{{ csrf_token }}';
+  </script>
+  {{ form|crispy }}
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
 {% endblock %}

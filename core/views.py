@@ -74,5 +74,37 @@ class SecretDetailView(LoginRequiredMixin, generics.RetrieveUpdateDestroyAPIView
 
 
 def add_secret(request):
-    form = SecretForm()
+    if request.method == "POST":
+        form = SecretForm(request.POST)
+        if form.is_valid():
+            # Get the form data
+            title = form.cleaned_data['title']
+            additional_info = form.cleaned_data['additional_info']
+            content_text = request.POST.get('content', '')  # Get the content as text
+
+            # Encode the content as binary using UTF-8 encoding
+            content_binary = content_text.encode('utf-8')
+
+            # Create a new Secret instance with binary content
+            new_secret = Secret.objects.create(
+                user=request.user,  # Replace with your user handling logic
+                title=title,
+                content=content_binary,
+                additional_info=additional_info
+            )
+
+            # Optionally, you can display a success message
+            messages.success(request, "Secret created successfully.")
+
+            # Redirect to a success page or another appropriate page
+            return redirect("home")  # Redirect to the home page or another URL
+
+        else:
+            # If the form is not valid, you can display an error message
+            messages.error(request, "Invalid form data. Please check your inputs.")
+
+    else:
+        # If it's not a POST request, render the empty form
+        form = SecretForm()
+
     return render(request, 'core/add.html', {'form': form})

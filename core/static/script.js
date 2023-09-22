@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+    console.log("test")
     // Function to fetch and display secrets
     function fetchAndDisplaySecrets() {
         fetch("/secrets/", {
@@ -91,10 +92,5 @@ document.addEventListener("DOMContentLoaded", function () {
     if (isAuthenticated) {
         fetchAndDisplaySecrets(); // Fetch and display secrets if the user is logged in
     }
-});
 
-// Function to get the CSRF token from cookies
-function getCookie(name) {
-    const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
-    return cookieValue ? cookieValue.pop() : '';
-}
+});
