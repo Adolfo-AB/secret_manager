@@ -16,4 +16,7 @@ urlpatterns = [
 
     # Add Secret URL
     path('add/', views.add_secret, name='add'),
+
+    # Details view
+    path('secrets/details/<int:secret_id>/', views.secret_detail, name='secret_detail'),
 ]
