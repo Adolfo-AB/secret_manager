@@ -20,6 +20,8 @@ in a different place, like a secure device with restricted access.
 As expected, a user can only see its own secrets.
 The encryption algorithm used is the Fernet algorithm.
 Implementing this feature has allowed me to learn about network security and cryptography.
+- When adding a Secret, the user can click a button to generate a secure secret 
+(at least 12 characters long, containing capital letters, numbers and symbols).
 - Creation of a CRUD REST API using Django REST Framework. During the course we did not implement any REST API
 from scratch, and since I am interested in backend web development, I thought it would be a good idea to learn
 about Django REST Framework. This API is used to fetch secrets and secret details,
