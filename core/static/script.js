@@ -255,4 +255,32 @@ document.addEventListener("DOMContentLoaded", function () {
         fetchAndDisplaySecretDetails(secretId); // Fetch and display the secret details if on the detail page
     }
 
+    const generateSecretButton = document.getElementById("generate-secret-button");
+    const contentField = document.getElementById("id_content"); // Make sure to use the correct field ID
+
+    if (generateSecretButton && contentField) {
+        generateSecretButton.addEventListener("click", function () {
+          // Generate a secure secret (e.g., a random password)
+          const secureSecret = generateSecureSecret();
+
+          // Auto-fill the content field with the secure secret
+          contentField.value = secureSecret;
+        });
+      }
+
+    // Function to generate a secure secret (you can customize this as needed)
+    function generateSecureSecret() {
+        // Generate a random secure secret (e.g., 12 characters with a mix of letters, numbers, and special characters)
+        const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:,.<>?";
+        const secureSecretLength = 12;
+        let secureSecret = "";
+
+        for (let i = 0; i < secureSecretLength; i++) {
+          const randomIndex = Math.floor(Math.random() * characters.length);
+          secureSecret += characters.charAt(randomIndex);
+        }
+
+        return secureSecret;
+    }
+
 });

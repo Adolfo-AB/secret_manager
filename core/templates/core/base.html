@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+    {% load static %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}"> <!-- External CSS file -->
+
     <title>SecretManager</title>
 </head>
 <body>
@@ -24,8 +25,8 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
-                    <li class="nav-item" style="margin-right: 10px;">
-                        <a class="nav-link" href="{% url 'add' %}" style="color: blue; font-weight: bold;">Add Secret</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'add' %}">Add Secret</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
