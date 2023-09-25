@@ -37,3 +37,7 @@ since they are central in the Django web framework.
 date using the Fernet algorithm.
 - **urls.py**: Contains the URLs of the application.
 - **views.py**: Contains the views of the application --user authentication views and Secret manipulation views.
+
+## Usage
+1. `pip install -r requirements.txt`
+2. `python manage.py runserver`
