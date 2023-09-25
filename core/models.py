@@ -14,9 +14,6 @@ class Secret(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
-        # if not isinstance(self.content, bytes):
-        #     # Encode the content as binary using UTF-8 encoding
-        #     self.content = self.content.encode('utf-8')
         # If we are creating or editing a new Secret, generate a new encryption key,
         # encrypt the content and save it and save the encrypted key.
         if self.pk is None or Secret.objects.get(pk=self.pk).content != self.content:
